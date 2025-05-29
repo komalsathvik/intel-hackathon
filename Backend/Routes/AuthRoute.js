@@ -63,6 +63,9 @@ router.post("/Intellect", async (req, res) => {
     res.status(500).json({ error: "Failed to connect to Gemini API." });
   }
 });
+router.all("*", (req, res) => {
+  res.status(404).json({ message: "Route not found" });
+});
 
 
 
