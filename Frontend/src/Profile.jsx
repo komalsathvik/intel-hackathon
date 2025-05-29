@@ -17,7 +17,7 @@ function Profile() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/profile", {
+        const res = await axios.get("https://intel-hackathon.onrender.com/api/profile", {
           withCredentials: true,
         });
 
