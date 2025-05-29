@@ -10,11 +10,19 @@ const authRoute=require("../Backend/Routes/AuthRoute");
 app.use(cookieParser()); 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://intel-hackathon-two.vercel.app"
+];
+
 app.use(cors({
-    origin:["intel-hackathon-two.vercel.app"],
-    methods:["GET","POST","PUT","DELETE"],
-    credentials:true,
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+    return callback(new Error("Not allowed by CORS"));
+  },
+  credentials: true
 }));
+
 app.use("/api", authRoute);
 
 function db(){
