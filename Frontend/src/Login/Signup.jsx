@@ -44,7 +44,7 @@ const Signup = () => {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:3000/api/signup",
+        "https://intel-hackathon.onrender.com/api/signup",
         {
           email,
           password,
