@@ -10,7 +10,7 @@ function Accerleraters() {
   useEffect(() => {
     const fetchacceleraters = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/Acceleraters");
+        const res = await axios.get("https://intel-hackathon.onrender.com/api/Acceleraters");
         console.log(res.data);
         setacceleraters(res.data);
       } catch (err) {
