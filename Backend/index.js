@@ -13,7 +13,6 @@ app.use(express.urlencoded({ extended: true }));
 const allowedOrigins = [
   "http://localhost:3000",
   "https://intel-hackathon-two.vercel.app",
-  "intel-hackathon-two.vercel.app"
 ];
 
 app.use(cors({
