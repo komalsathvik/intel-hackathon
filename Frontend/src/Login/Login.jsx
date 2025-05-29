@@ -36,7 +36,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:3000/api/login",
+        "https://intel-hackathon.onrender.com/api/login",
         {
           email,
           password,
