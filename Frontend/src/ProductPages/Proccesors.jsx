@@ -11,7 +11,7 @@ function Proccessors() {
   useEffect(() => {
     const fetchProcessors = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/proccessors");
+        const res = await axios.get("https://intel-hackathon.onrender.com/api/proccessors");
         console.log(res.data);
         setProcessors(res.data);
       } catch (err) {
