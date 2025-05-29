@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser");
 const port=process.env.PORT || 3000;
 const url=process.env.MONGO_URL;
 const app=express();
-const authRoute=require("../Intel-backend/Routes/AuthRoute");
+const authRoute=require("../Backend/Routes/AuthRoute");
 app.use(cookieParser()); 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
