@@ -9,7 +9,7 @@ function System() {
   useEffect(() => {
     const fetchSystems = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/Systems");
+        const res = await axios.get("https://intel-hackathon.onrender.com/api/Systems");
         console.log(res.data);
         setSystems(res.data);
       } catch (err) {
