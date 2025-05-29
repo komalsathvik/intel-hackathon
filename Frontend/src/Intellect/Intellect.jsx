@@ -34,7 +34,7 @@ function Intellect() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:3000/api/Intellect", {
+      const res = await fetch("https://intel-hackathon.onrender.com/api/Intellect", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: messageToSend }),
