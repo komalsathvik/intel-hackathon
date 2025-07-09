@@ -17,10 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 const cors = require("cors");
 
 app.use(cors({
-  origin: [
-    "http://localhost:3000",
-    "https://intel-hackathon-steel.vercel.app"
-  ],
+  origin: "*",
   credentials: true
 }));
 
