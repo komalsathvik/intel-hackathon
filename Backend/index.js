@@ -14,27 +14,15 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const cors = require("cors");
-const allowedOrigins = [
-  "http://localhost:3000",
-  "https://intel-hackathon-steel.vercel.app"
-];
+const allowedOrigins = ["*"];
 
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
     return callback(new Error("Not allowed by CORS"));
   },
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  credentials: true
 }));
-
-// Preflight support
-app.options("*", cors());
-
 
 app.use("/api", authRoute); // ✅ All routes are prefixed with /api
 
