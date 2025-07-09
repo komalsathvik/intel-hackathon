@@ -43,7 +43,7 @@ router.get("/accelerators", async (req, res) => {
 
 // Gemini API integration
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const ai = new GoogleGenerativeAI(AIzaSyA2zVpvHSMDtSDsKiTVftn893tkb4kv3o4);
+const ai = new GoogleGenerativeAI("AIzaSyA2zVpvHSMDtSDsKiTVftn893tkb4kv3o4");
 
 router.post("/intellect", async (req, res) => {
   const { message } = req.body;
