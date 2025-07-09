@@ -37,7 +37,7 @@ const Login = () => {
 
     try {
       const { data } = await axios.post(
-        "https://intel-hackathon.onrender.com/api/login",
+        "https://backend-4usk.onrender.com/api/login",
         { email, password },
         { withCredentials: true }
       );
