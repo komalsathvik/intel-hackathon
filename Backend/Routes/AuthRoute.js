@@ -4,7 +4,7 @@ const { userVerification } = require("../middlewares/AuthMiddleware");
 const router = require("express").Router();
 const Processor = require("../models/ProcessorsModel");
 const System = require("../models/SystemsModel");
-const Accelerator = require("../models/AcceleratorModel");
+const Accelerator = require("../models/AccerelaterModel");
 const Cart = require("../models/CartModel");
 
 // Auth routes
