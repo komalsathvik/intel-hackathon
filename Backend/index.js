@@ -35,7 +35,7 @@ app.use("/api", authRoute);
 
 async function db() {
   try {
-    await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+    await mongoose.connect(url);
     console.log("✅ DB connected");
   } catch (e) {
     console.log(`❌ DB connection error: ${e}`);
