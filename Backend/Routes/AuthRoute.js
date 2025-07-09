@@ -65,9 +65,6 @@ router.post("/intellect", async (req, res) => {
   }
 });
 
-// Fallback route
-router.all("*", (req, res) => {
-  res.status(404).json({ message: "Route not found" });
-});
+
 
 module.exports = router;
