@@ -24,7 +24,7 @@ app.use(cors({
   credentials: true
 }));
 
-app.use("/api", authRoute); // ✅ All routes are prefixed with /api
+app.use("/", authRoute); // ✅ All routes are prefixed with /api
 
 function db() {
   try {

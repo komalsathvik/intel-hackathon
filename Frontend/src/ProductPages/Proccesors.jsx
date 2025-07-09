@@ -10,7 +10,7 @@ function Proccessors() {
   useEffect(() => {
     const fetchProcessors = async () => {
       try {
-        const res = await axios.get("https://backend-4usk.onrender.com/api/proccessors");
+        const res = await axios.get("https://backend-4usk.onrender.com/proccessors");
         setProcessors(res.data);
       } catch (err) {
         console.error("Error fetching processors:", err);

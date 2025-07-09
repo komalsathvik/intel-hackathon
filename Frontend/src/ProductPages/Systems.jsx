@@ -9,7 +9,7 @@ function System() {
   useEffect(() => {
     const fetchSystems = async () => {
       try {
-        const res = await axios.get("https://backend-4usk.onrender.com/api/Systems");
+        const res = await axios.get("https://backend-4usk.onrender.com/Systems");
         setSystems(res.data);
       } catch (err) {
         console.error("Error fetching systems:", err);
