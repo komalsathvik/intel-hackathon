@@ -13,7 +13,7 @@ function Profile() {
     address: "",
   });
 
-  // Fetch user data on component mount
+  // Fetch user data on mount
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -21,7 +21,6 @@ function Profile() {
           withCredentials: true,
         });
 
-        // ✅ Use correct key: 'success' instead of 'status'
         if (res.data.success && res.data.user) {
           const { email, username, address } = res.data.user;
           setFormData((prev) => ({
@@ -38,10 +37,11 @@ function Profile() {
         console.error("Profile fetch error:", err);
       }
     };
+
     fetchUser();
   }, []);
 
-  // Handle input changes
+  // Handle form input
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -50,9 +50,10 @@ function Profile() {
     }));
   };
 
-  // Handle form submit
+  // Submit profile update
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (formData.password !== formData.reenteredPassword) {
       toast.error("Passwords do not match", { position: "top-right" });
       return;
@@ -60,7 +61,7 @@ function Profile() {
 
     try {
       const res = await axios.put(
-        "http://localhost:3000/profile/api/update",
+        "https://intel-hackathon.onrender.com/api/update",
         {
           email: formData.email,
           username: formData.username,
@@ -73,7 +74,6 @@ function Profile() {
       if (res.data.success) {
         toast.success("Profile updated successfully", { position: "bottom-right" });
 
-        // ✅ Reset password fields only
         setFormData((prev) => ({
           ...prev,
           password: "",
@@ -93,8 +93,8 @@ function Profile() {
       <div className="container">
         <div className="row">
           <div className="col-2"></div>
-          <div className="col-8 text-center" style={{ background: "whitesmoke", height: "80vh", borderRadius: "2rem" }}>
-            <i className="fa-solid fa-user mt-3" style={{ fontSize: "6rem" }}></i>
+          <div className="col-8 text-center" style={{ background: "whitesmoke", height: "auto", borderRadius: "2rem" }}>
+            <i className="fa-solid fa-user mt-4" style={{ fontSize: "5rem" }}></i>
             <form className="mt-2 p-3" onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label className="form-label">Your Email</label>
@@ -126,8 +126,8 @@ function Profile() {
                   type="password"
                   name="password"
                   className="form-control"
-                  value={formData.password}
                   placeholder="Enter new password"
+                  value={formData.password}
                   onChange={handleChange}
                   required
                 />
@@ -139,8 +139,8 @@ function Profile() {
                   type="password"
                   name="reenteredPassword"
                   className="form-control"
-                  value={formData.reenteredPassword}
                   placeholder="Re-enter password"
+                  value={formData.reenteredPassword}
                   onChange={handleChange}
                   required
                 />
@@ -149,17 +149,17 @@ function Profile() {
               <div className="mb-3">
                 <label className="form-label">Your Address</label>
                 <textarea
-                  className="form-control"
                   name="address"
+                  className="form-control"
                   rows="3"
                   value={formData.address}
                   onChange={handleChange}
                   required
-                ></textarea>
+                />
               </div>
 
-              <button type="submit" className="btn btn-primary mt-2" style={{ width: "100%" }}>
-                Save details
+              <button type="submit" className="btn btn-primary mt-2 w-100">
+                Save Details
               </button>
             </form>
             <ToastContainer />
@@ -167,9 +167,7 @@ function Profile() {
           <div className="col-2"></div>
         </div>
       </div>
-      <br></br>
-      <br></br>
-      <br></br>
+      <br /><br /><br />
     </div>
   );
 }

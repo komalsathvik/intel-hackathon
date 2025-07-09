@@ -6,61 +6,90 @@ module.exports.Signup = async (req, res) => {
   try {
     const { email, password, reenteredPassword, username, address } = req.body;
 
+    if (!email || !password || !reenteredPassword || !username || !address) {
+      return res.status(400).json({ success: false, message: "All fields are required" });
+    }
+
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.json({ message: "User already exists" });
+      return res.status(409).json({ success: false, message: "User already exists" });
     }
 
     if (password !== reenteredPassword) {
-      return res.status(400).json({ message: "Passwords do not match" });
+      return res.status(400).json({ success: false, message: "Passwords do not match" });
     }
 
-    const user = await User.create({ email, password, username, address });
-    const token = createSecretToken(user._id);
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await User.create({
+      email,
+      password: hashedPassword,
+      username,
+      address,
+    });
 
+    const token = createSecretToken(user._id);
     res.cookie("token", token, {
       withCredentials: true,
-      httpOnly: false,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Lax",
     });
 
     return res.status(201).json({
-      message: "User signed in successfully",
+      message: "User signed up successfully",
       success: true,
-      user,
+      user: { email: user.email, username: user.username, address: user.address },
     });
-
   } catch (error) {
     console.error("Signup Error:", error);
-    return res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
+
 module.exports.Login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    if(!email || !password ){
-      return res.json({message:'All fields are required'})
+    if (!email || !password) {
+      return res.status(400).json({ success: false, message: "All fields are required" });
     }
+
     const user = await User.findOne({ email });
-    if(!user){
-      return res.json({message:'Incorrect password or email' }) 
+    if (!user) {
+      return res.status(401).json({ success: false, message: "Incorrect email or password" });
     }
-    const auth = await bcrypt.compare(password,user.password)
+
+    const auth = await bcrypt.compare(password, user.password);
     if (!auth) {
-      return res.json({message:'Incorrect password or email' }) 
+      return res.status(401).json({ success: false, message: "Incorrect email or password" });
     }
-     const token = createSecretToken(user._id);
-     res.cookie("token", token, {
-       withCredentials: true,
-       httpOnly: false,
-     });
-     res.status(201).json({ message: "User logged in successfully", success: true });
-     next()
+
+    const token = createSecretToken(user._id);
+    res.cookie("token", token, {
+      withCredentials: true,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Lax",
+    });
+
+    res.status(200).json({
+      message: "User logged in successfully",
+      success: true,
+      user: { email: user.email, username: user.username, address: user.address },
+    });
+
+    next();
   } catch (error) {
-    console.error(error);
+    console.error("Login Error:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
-}
+};
+
 module.exports.getProfile = async (req, res) => {
   try {
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+
     const user = await User.findById(req.user.id);
     if (user) {
       return res.json({
@@ -68,36 +97,39 @@ module.exports.getProfile = async (req, res) => {
         user: { email: user.email, username: user.username, address: user.address },
       });
     } else {
-      return res.json({ success: false, message: "User not found" });
+      return res.status(404).json({ success: false, message: "User not found" });
     }
   } catch (err) {
-    console.error(err);
+    console.error("Get Profile Error:", err);
     res.status(500).json({ success: false, message: "Server error" });
   }
 };
 
 module.exports.updateProfile = async (req, res) => {
-  const { email, username, password, address } = req.body;
   try {
-    const user = await User.findById(req.user.id);
-    console.log("data recieved");
-    if (!user) {
-      return res.json({ success: false, message: "User not found" });
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
     }
 
-    // Update user fields
+    const { email, username, password, address } = req.body;
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
     user.email = email || user.email;
     user.username = username || user.username;
-    if (password) {
-  user.password = password;
-}
     user.address = address || user.address;
-console.log("After update:", user);
+
+    if (password) {
+      user.password = await bcrypt.hash(password, 10);
+    }
+
     await user.save();
-    console.log("After saved:", user);
     return res.json({ success: true, message: "Profile updated successfully" });
   } catch (err) {
-    console.error(err);
+    console.error("Update Profile Error:", err);
     res.status(500).json({ success: false, message: "Server error" });
   }
 };

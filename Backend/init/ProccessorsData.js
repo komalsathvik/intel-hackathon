@@ -1,14 +1,14 @@
-const Proccessordata = [
+const processorData = [
   {
     title: "Intel® Core™ Ultra Processors",
-    name: "Intel® Core™ Ultra 9 285K", 
-    cores: " 24", 
-    maxTurboFrequencyGHz: "5.7 GHz", 
-    cacheMB: "36 MB", 
-    graphics: "Intel® Graphics", 
-    launchDate: "Q4'24", 
+    name: "Intel® Core™ Ultra 9 285K",
+    cores: "24",
+    maxTurboFrequencyGHz: "5.7 GHz",
+    cacheMB: "36 MB",
+    graphics: "Intel® Graphics",
+    launchDate: "Q4'24",
     priceINR: "₹45,999",
-    img_url : "/proccessors/ic-1.jpeg"
+    imgUrl: "/proccessors/ic-1.jpeg",
   },
   {
     title: "Intel® Core™ Ultra Processors",
@@ -19,7 +19,7 @@ const Proccessordata = [
     graphics: "Intel® Graphics",
     launchDate: "Q4'24",
     priceINR: "₹38,000",
-    img_url: "/proccessors/ic-2.jpeg"
+    imgUrl: "/proccessors/ic-2.jpeg",
   },
   {
     title: "Intel® Core™ Ultra Processors",
@@ -30,7 +30,7 @@ const Proccessordata = [
     graphics: "Intel® Graphics",
     launchDate: "Q4'24",
     priceINR: "₹31,450",
-    img_url: "/proccessors/ic-3.jpeg"
+    imgUrl: "/proccessors/ic-3.jpeg",
   },
   {
     title: "Intel® Core™ Ultra Processors",
@@ -41,9 +41,8 @@ const Proccessordata = [
     graphics: "Intel® Arc™ 140V",
     launchDate: "Q3'24",
     priceINR: "₹24,299",
-    img_url: "/proccessors/ic-4.jpeg"
+    imgUrl: "/proccessors/ic-4.jpeg",
   },
- 
   {
     title: "Intel® Core™ Processors",
     name: "Intel® Core™ i9-13900K",
@@ -53,7 +52,7 @@ const Proccessordata = [
     graphics: "Intel® UHD Graphics 770",
     launchDate: "Q4'22",
     priceINR: "₹45,999",
-    img_url: "/proccessors/ic-6.jpeg"
+    imgUrl: "/proccessors/ic-6.jpeg",
   },
   {
     title: "Intel® Core™ Processors",
@@ -64,7 +63,7 @@ const Proccessordata = [
     graphics: "Intel® UHD Graphics 770",
     launchDate: "Q4'22",
     priceINR: "₹38,000",
-    img_url: "/proccessors/ic-7.jpeg"
+    imgUrl: "/proccessors/ic-7.jpeg",
   },
   {
     title: "Intel® Core™ Processors",
@@ -75,7 +74,7 @@ const Proccessordata = [
     graphics: "Intel® UHD Graphics 770",
     launchDate: "Q4'22",
     priceINR: "₹31,450",
-    img_url: "/proccessors/ic-8.jpeg"
+    imgUrl: "/proccessors/ic-8.jpeg",
   },
   {
     title: "Intel® Core™ Processors",
@@ -86,9 +85,8 @@ const Proccessordata = [
     graphics: "Intel® UHD Graphics 730",
     launchDate: "Q1'23",
     priceINR: "₹24,299",
-    img_url: "/proccessors/ic-9.jpeg"
+    imgUrl: "/proccessors/ic-9.jpeg",
   },
-  
   {
     title: "Intel® Xeon® Processors",
     name: "Intel® Xeon® 6745P",
@@ -99,7 +97,7 @@ const Proccessordata = [
     tdpW: "300 W",
     launchDate: "Q1'25",
     priceINR: "₹45,999",
-    img_url: "/proccessors/ic-11.jpeg",
+    imgUrl: "/proccessors/ic-11.jpeg",
   },
   {
     title: "Intel® Xeon® Processors",
@@ -111,7 +109,7 @@ const Proccessordata = [
     tdpW: "210 W",
     launchDate: "Q1'25",
     priceINR: "₹38,000",
-    img_url: "/proccessors/ic-12.jpeg",
+    imgUrl: "/proccessors/ic-12.jpeg",
   },
   {
     title: "Intel® Xeon® Processors",
@@ -123,7 +121,7 @@ const Proccessordata = [
     tdpW: "190 W",
     launchDate: "Q1'25",
     priceINR: "₹31,450",
-    img_url: "/proccessors/ic-13.jpeg",
+    imgUrl: "/proccessors/ic-13.jpeg",
   },
   {
     title: "Intel® Xeon® Processors",
@@ -135,9 +133,8 @@ const Proccessordata = [
     tdpW: "150 W",
     launchDate: "Q1'25",
     priceINR: "₹24,299",
-    img_url: "/proccessors/ic-14.jpeg",
+    imgUrl: "/proccessors/ic-14.jpeg",
   },
-  
   {
     title: "Intel® Xeon® CPU Max Series",
     name: "Intel® Xeon® CPU Max 9462",
@@ -148,7 +145,7 @@ const Proccessordata = [
     tdpW: "350 W",
     launchDate: "Q1'23",
     priceINR: "₹45,999",
-    img_url: "/proccessors/ic-16.jpeg",
+    imgUrl: "/proccessors/ic-16.jpeg",
   },
   {
     title: "Intel® Xeon® CPU Max Series",
@@ -160,7 +157,7 @@ const Proccessordata = [
     tdpW: "350 W",
     launchDate: "Q1'23",
     priceINR: "₹38,000",
-    img_url: "/proccessors/ic-17.jpeg",
+    imgUrl: "/proccessors/ic-17.jpeg",
   },
   {
     title: "Intel® Xeon® CPU Max Series",
@@ -172,8 +169,8 @@ const Proccessordata = [
     tdpW: "350 W",
     launchDate: "Q1'23",
     priceINR: "₹31,450",
-    img_url: "/proccessors/ic-18.jpeg",
-  },  
+    imgUrl: "/proccessors/ic-18.jpeg",
+  },
 ];
 
-module.exports = {data : Proccessordata}
+module.exports = { data: processorData };

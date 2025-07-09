@@ -1,17 +1,20 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const SystemsSchema = new mongoose.Schema({
-  title:{type:String},
-  name: { type: String },              
-  proccessor: { type: String },         
-  graphics: { type: String },          
-  Display : { type: String },          
-  priceINR: { type: String },            
-  img_url :{type:String},
-  weight: {type:String},
-  Design :{type:String},
-  Memory : {type:String},
-  Storage : {type:String},
-});
+const systemSchema = new mongoose.Schema(
+  {
+    title: { type: String, required: true },
+    name: { type: String, required: true },
+    processor: { type: String, default: "" }, // Fixed typo
+    graphics: { type: String, default: "" },
+    display: { type: String, default: "" },
+    priceInr: { type: String, required: true }, // Use Number if doing price math
+    imgUrl: { type: String, required: true },
+    weight: { type: String, default: "" },
+    design: { type: String, default: "" },
+    memory: { type: String, default: "" },
+    storage: { type: String, default: "" },
+  },
+  { timestamps: true }
+);
 
-module.exports = mongoose.model('System', SystemsSchema);
+module.exports = mongoose.model("System", systemSchema);

@@ -4,32 +4,35 @@ const CartItemSchema = new mongoose.Schema({
   productId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
+    refPath: "items.productType", // dynamic reference
   },
   productType: {
     type: String,
-    enum: ["Proccessor", "Accelerater", "System"],
+    required: true,
+    enum: ["Processor", "Accelerator", "System"],
   },
   quantity: {
     type: Number,
     default: 1,
+    min: 1,
   },
 });
 
-const CartSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
+const CartSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    items: [CartItemSchema],
+    totalPriceInr: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
   },
-  items: [CartItemSchema],
-  totalPriceINR: {
-    type: Number,
-    default: 0,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  { timestamps: true } // auto includes createdAt and updatedAt
+);
 
 module.exports = mongoose.model("Cart", CartSchema);

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import "./Intellect.css";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
+import "./Intellect.css";
 
 function Intellect() {
   const location = useLocation();
@@ -9,24 +9,25 @@ function Intellect() {
 
   const [input, setInput] = useState(initialMessage);
   const [messages, setMessages] = useState([]);
-  const [loading, setLoading] = useState(false); // <-- add loading state
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const stored = sessionStorage.getItem("initialMessage") || "";
+    const stored = sessionStorage.getItem("initialMessage");
     if (stored) {
       setInput(stored);
       sessionStorage.removeItem("initialMessage");
 
-      // Delay to ensure input state is updated before sending
       setTimeout(() => {
         handleSend(stored);
       }, 100);
+    } else if (initialMessage) {
+      handleSend(initialMessage);
     }
   }, []);
 
   const handleSend = async (overrideInput) => {
-    const messageToSend = overrideInput ?? input;
-    if (!messageToSend.trim()) return;
+    const messageToSend = overrideInput ?? input.trim();
+    if (!messageToSend) return;
 
     const userMessage = { role: "user", content: messageToSend };
     setMessages((prev) => [...prev, userMessage]);
@@ -41,15 +42,15 @@ function Intellect() {
       });
 
       const data = await res.json();
-      const reply = data.reply || "No response";
-
+      const reply = data.reply || "No response received.";
       const botMessage = { role: "bot", content: reply };
+
       setMessages((prev) => [...prev, botMessage]);
-    } catch (error) {
-      console.error("Error:", error);
+    } catch (err) {
+      console.error("Error:", err);
       setMessages((prev) => [
         ...prev,
-        { role: "bot", content: "Error reaching backend API." },
+        { role: "bot", content: "⚠️ Could not reach the backend." },
       ]);
     } finally {
       setLoading(false);
@@ -65,10 +66,10 @@ function Intellect() {
           {messages.map((msg, idx) => (
             <div
               key={idx}
-              className={`mb-2 p-2 rounded ${
+              className={`mb-3 p-2 rounded ${
                 msg.role === "user"
-                  ? " text-black text-end"
-                  : " text-black text-start"
+                  ? "text-end bg-white border"
+                  : "text-start bg-secondary bg-opacity-10"
               }`}
             >
               <ReactMarkdown
@@ -99,7 +100,6 @@ function Intellect() {
             </div>
           ))}
 
-          {/* Loader dots */}
           {loading && (
             <div className="loader-dots text-start mb-2 p-2">
               <span className="dot">.</span>
@@ -116,9 +116,14 @@ function Intellect() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
-            placeholder="Enter Msg"
+            placeholder="Type your message..."
+            disabled={loading}
           />
-          <button className="btn btn-primary" onClick={handleSend}>
+          <button
+            className="btn btn-primary"
+            onClick={() => handleSend()}
+            disabled={loading || !input.trim()}
+          >
             <i className="fa-solid fa-paper-plane"></i>
           </button>
         </div>

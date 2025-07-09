@@ -1,17 +1,20 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const AcceleraterSchema = new mongoose.Schema({
-  Configuration:{type:String},
-  title:{type:String},
-  name: { type: String }, 
-  priceINR: { type: Number }, 
-  Per_unit_Estimate:{type:String},
-  Availability:{type:String},
- Performance:{type:String},
-  Form_Factor:{type:String},
-  Features:{type:String},
-  Specifications:{type:String},
-  img_url :{type:String},
-});
+const acceleratorSchema = new mongoose.Schema(
+  {
+    configuration: { type: String, default: "" },
+    title: { type: String, required: true },
+    name: { type: String, required: true },
+    priceINR: { type: Number, required: true },
+    perUnitEstimate: { type: String, default: "" },
+    availability: { type: String, default: "" },
+    performance: { type: String, default: "" },
+    formFactor: { type: String, default: "" },
+    features: { type: String, default: "" },
+    specifications: { type: String, default: "" },
+    imgUrl: { type: String, required: true },
+  },
+  { timestamps: true }
+);
 
-module.exports = mongoose.model('Accelerater', AcceleraterSchema);
+module.exports = mongoose.model("Accelerator", acceleratorSchema);

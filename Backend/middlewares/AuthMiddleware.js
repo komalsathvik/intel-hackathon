@@ -1,30 +1,32 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 
-module.exports.userVerification = (req, res, next) => {
-  const token = req.cookies.token;
+module.exports.userVerification = async (req, res, next) => {
+  const token = req.cookies?.token;
+
   if (!token) {
-    console.log("No token found");
-    return res.status(401).json({ status: false, message: "No token found" });
+    if (process.env.NODE_ENV !== "production") {
+      console.log("🔐 No token in request cookies");
+    }
+    return res.status(401).json({ success: false, message: "Authentication required" });
   }
 
-  jwt.verify(token, process.env.TOKEN_KEY, async (err, decoded) => {
-    if (err) {
-      console.log("JWT verification failed");
-      return res.status(401).json({ status: false, message: "Invalid token" });
+  try {
+    if (!process.env.TOKEN_KEY) {
+      throw new Error("TOKEN_KEY not defined in environment");
     }
 
-    try {
-      const user = await User.findById(decoded.id);
-      if (!user) {
-        return res.status(401).json({ status: false, message: "User not found" });
-      }
+    const decoded = jwt.verify(token, process.env.TOKEN_KEY);
+    const user = await User.findById(decoded.id);
 
-      req.user = { id: user._id }; 
-      next(); 
-    } catch (error) {
-      console.error("Middleware DB Error:", error);
-      return res.status(500).json({ status: false, message: "Server error" });
+    if (!user) {
+      return res.status(401).json({ success: false, message: "User not found" });
     }
-  });
+
+    req.user = { id: user._id }; // Optional: add email or role if needed
+    next();
+  } catch (err) {
+    console.error("🔐 Token verification error:", err.message);
+    return res.status(401).json({ success: false, message: "Invalid or expired token" });
+  }
 };

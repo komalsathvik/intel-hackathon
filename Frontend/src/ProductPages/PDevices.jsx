@@ -2,11 +2,11 @@ import React from 'react';
 import "./Products.css";
 
 function Pdevices() {
-    return ( 
-        <div  className='Network-box'>
-                <h1 className='m-5 p-5 text-center'>Data coming soon....</h1>
-        </div>
-     );
+  return (
+    <div className="Network-box d-flex justify-content-center align-items-center" style={{ height: "80vh" }}>
+      <h1 className="text-center text-muted">Data Coming Soon...</h1>
+    </div>
+  );
 }
 
 export default Pdevices;
