@@ -14,21 +14,28 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const allowedOrigins = ["*"];
+// Allow only your frontend origin for CORS
+const allowedOrigins = ["https://intel-hackathon-steel.vercel.app"];
 
 app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
-    return callback(new Error("Not allowed by CORS"));
+  origin: function(origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error("Not allowed by CORS"));
+    }
   },
   credentials: true
 }));
 
-app.use("/", authRoute); // ✅ All routes are prefixed with /api
+// Prefix all API routes with /api
+app.use("/api", authRoute);
 
-function db() {
+async function db() {
   try {
-    mongoose.connect(url);
+    await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
     console.log("✅ DB connected");
   } catch (e) {
     console.log(`❌ DB connection error: ${e}`);
