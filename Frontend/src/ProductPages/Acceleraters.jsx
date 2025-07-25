@@ -9,7 +9,7 @@ function Accelerators() {
   useEffect(() => {
     const fetchAccelerators = async () => {
       try {
-        const res = await axios.get("https://backend-4usk.onrender.com/Acceleraters");
+        const res = await axios.get("https://backend-zh6t.onrender.com/Acceleraters");
         setAccelerators(res.data);
       } catch (err) {
         console.error("Error fetching accelerators:", err);

@@ -17,7 +17,7 @@ function Profile() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get("https://backend-4usk.onrender.com/profile", {
+        const res = await axios.get("https://backend-zh6t.onrender.com/profile", {
           withCredentials: true,
         });
 

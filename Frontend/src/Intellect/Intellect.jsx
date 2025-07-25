@@ -35,7 +35,7 @@ function Intellect() {
     setLoading(true);
 
     try {
-      const res = await fetch("https://backend-4usk.onrender.com/Intellect", {
+      const res = await fetch("https://backend-zh6t.onrender.com/Intellect", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: messageToSend }),
