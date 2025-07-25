@@ -55,7 +55,7 @@ const Signup = () => {
 
     try {
       const { data } = await axios.post(
-        "https://backend-zh6t.onrender.com/signup",
+        "https://backend-zh6t.onrender.com/api/signup",
         { email, password, reenteredPassword, username, address },
         { withCredentials: true }
       );

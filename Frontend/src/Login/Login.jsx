@@ -37,7 +37,7 @@ const Login = () => {
 
     try {
       const { data } = await axios.post(
-        "https://backend-zh6t.onrender.com/login",
+        "https://backend-zh6t.onrender.com/api/login",
         { email, password },
         { withCredentials: true }
       );
