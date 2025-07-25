@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Allow only your frontend origin for CORS
-const allowedOrigins = ["https://intel-hackathon-steel.vercel.app"];
+const allowedOrigins = ["http://localhost:5173/"];
 
 app.use(cors({
   origin: function(origin, callback) {
