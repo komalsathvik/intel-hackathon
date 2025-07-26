@@ -64,7 +64,7 @@ const Signup = () => {
       if (success) {
         handleSuccess(message || "Signup successful");
         setTimeout(() => {
-          navigate("/");
+          navigate("/login");
         }, 1000);
       } else {
         handleError(message || "Signup failed");
