@@ -22,9 +22,10 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre("save", async function () {
-  if (!this.isModified("password")) return; // ✅ only hash if password is new or modified
+  if (!this.isModified("password")) return;
   this.password = await bcrypt.hash(this.password, 12);
 });
+
 
 
 module.exports = mongoose.model("User", userSchema);
