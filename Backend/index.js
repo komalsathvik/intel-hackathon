@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Allow only your frontend origin for CORS
-const allowedOrigins = ["http://localhost:5173/","https://intel-hackathon.onrender.com"];
+const allowedOrigins = ["https://intel-hackathon.onrender.com"];
 
 app.use(cors({
   origin: function(origin, callback) {
