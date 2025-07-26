@@ -37,7 +37,7 @@ const Login = () => {
 
     try {
       const { data } = await axios.post(
-        "https://backend-zh6t.onrender.com/api/login",
+        `${import.meta.env.VITE_BACKEND_URL}/api/login`,
         { email, password },
         { withCredentials: true }
       );
