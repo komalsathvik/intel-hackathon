@@ -8,37 +8,47 @@ const port = process.env.PORT || 3000;
 const url = process.env.MONGO_URL;
 const app = express();
 
-const authRoute = require("./Routes/AuthRoute"); // ✅ Note: relative path
+const authRoute = require("./Routes/AuthRoute");
 
-app.use(cookieParser()); 
+// Parse cookies and body
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Allow only your frontend origin for CORS
-const allowedOrigins = ["http://localhost:5173/","https://intel-hackathon.onrender.com"];
+// ✅ CORS: allow frontend access
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://intel-hackathon.onrender.com"
+];
 
-app.use(cors({
-  origin: function(origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    } else {
-      return callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS: " + origin));
+      }
+    },
+    credentials: true,
+  })
+);
 
-// Prefix all API routes with /api
+// ✅ Health Check Route (optional)
+app.get("/", (req, res) => {
+  res.send("🎉 Intel backend is running");
+});
+
+// ✅ API Routes
 app.use("/api", authRoute);
 
+// ✅ Connect to MongoDB and Start Server
 async function db() {
   try {
     await mongoose.connect(url);
-    console.log("✅ DB connected");
+    console.log("✅ MongoDB connected");
   } catch (e) {
-    console.log(`❌ DB connection error: ${e}`);
+    console.log(`❌ MongoDB connection error: ${e.message}`);
   }
 }
 
