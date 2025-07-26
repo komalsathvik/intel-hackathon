@@ -46,21 +46,28 @@ module.exports.Signup = async (req, res) => {
   }
 };
 
-module.exports.Login = async (req, res, next) => {
+module.exports.Login = async (req, res) => {
   try {
     const { email, password } = req.body;
+
     if (!email || !password) {
-      return res.status(400).json({ success: false, message: "All fields are required" });
+      return res
+        .status(400)
+        .json({ success: false, message: "All fields are required" });
     }
 
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({ success: false, message: "Incorrect email or password" });
+      return res
+        .status(401)
+        .json({ success: false, message: "Incorrect email or password" });
     }
 
     const auth = await bcrypt.compare(password, user.password);
     if (!auth) {
-      return res.status(401).json({ success: false, message: "Incorrect email or password" });
+      return res
+        .status(401)
+        .json({ success: false, message: "Incorrect email or password" });
     }
 
     const token = createSecretToken(user._id);
@@ -71,18 +78,24 @@ module.exports.Login = async (req, res, next) => {
       sameSite: "Lax",
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "User logged in successfully",
       success: true,
-      user: { email: user.email, username: user.username, address: user.address },
+      user: {
+        email: user.email,
+        username: user.username,
+        address: user.address,
+      },
     });
 
-    next();
   } catch (error) {
     console.error("Login Error:", error);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
   }
 };
+
 
 module.exports.getProfile = async (req, res) => {
   try {
